@@ -1,29 +1,30 @@
 /*.App {*/
 /*  text-align: center;*/
 /*}*/
-.ant-layout-header{
-    padding: 0 300px;
-    box-shadow: 0 0 25px 0 rgba(0,0,0,0.5);
-    background-color: white;
+.ant-layout-header {
+  padding: 0 300px;
+  box-shadow: 0 0 25px 0 rgba(0, 0, 0, 0.5);
+  background-color: white;
 }
 .anticon {
-    vertical-align: 0;
+  vertical-align: 0;
 }
-,ant-upload-list-item-card-actions-btn{
-    margin-right:10px;
+,
+ant-upload-list-item-card-actions-btn {
+  margin-right: 10px;
 }
-.ant-typography kbd{
-    background: rgb(23 144 255);
-    border: 1px outset rgba(100, 100, 100, 1);
+.ant-typography kbd {
+  background: rgb(23 144 255);
+  border: 1px outset rgba(100, 100, 100, 1);
 }
-.about-page{
-    width:50%;
-    margin: auto;
+.about-page {
+  width: 50%;
+  margin: auto;
 }
-.site-layout-footer{
-    bottom: 0;
-    position: absolute;
-    width: 100%;
+.site-layout-footer {
+  bottom: 0;
+  position: absolute;
+  width: 100%;
 }
 /* ul.slick-dots.slick-dots-buttom {
     padding-top: 15px;
@@ -32,105 +33,102 @@
     height: 35px;
 } */
 
-.carousel{
-    background-repeat:no-repeat;
-    /* background-size: 1400px 580px; */
-    background-size: cover;    
-    background-position: top;
-    height: 400px;
+.carousel {
+  background-repeat: no-repeat;
+  /* background-size: 1400px 580px; */
+  background-size: cover;
+  background-position: top;
+  height: 400px;
 }
-.carousel-title{
-    /* margin: 0 500px; */
-    margin: auto;
-    border-radius: 25px;
-    width: auto;
-    position: inherit;
-    bottom: -200px;
-    /* height: 80px; */
-    color:white;
-    /* background-color: #000000; */
+.carousel-title {
+  /* margin: 0 500px; */
+  margin: auto;
+  border-radius: 25px;
+  width: auto;
+  position: inherit;
+  bottom: -200px;
+  /* height: 80px; */
+  color: white;
+  /* background-color: #000000; */
 }
-.first{
-    background-image: url(Media/images/step1.jpg);
+.first {
+  background-image: url(Assets/step1.jpg);
 }
-.second{
-    background-image: url(Media/images/step2.jpg);
+.second {
+  background-image: url(Assets/step2.jpg);
 }
-.third{
-    background-image: url(Media/images/step3.jpg);
-    background-position-y: -150px;
+.third {
+  background-image: url(Assets/step3.jpg);
+  background-position-y: -150px;
 }
-.fourth{
-    background-image: url(Media/images/step4.jpg);
-    background-position-y: -150px;
+.fourth {
+  background-image: url(Assets/step4.jpg);
+  background-position-y: -150px;
 }
 
-
-.middle-home-page{
-    margin:auto;
-    text-align: center;
-    width: 100%;
+.middle-home-page {
+  margin: auto;
+  text-align: center;
+  width: 100%;
 }
-.header-form{
-    border-bottom: solid 1px #dedfe0;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-    color: #29303b;
-    display: block;
-    font-weight: 700;
-    font-size: 15px;
-    padding: 24px 64px 24px 24px;
+.header-form {
+  border-bottom: solid 1px #dedfe0;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  color: #29303b;
+  display: block;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 24px 64px 24px 24px;
 }
-.statistics{
-    width: 50%;
-    text-align: center;
-    margin: 50px auto;
-    padding: 50px;
-    background-color:#93c7ff;
-    /* opacity: 1; */
-    border-radius: 30px;
+.statistics {
+  width: 50%;
+  text-align: center;
+  margin: 50px auto;
+  padding: 50px;
+  background-color: #93c7ff;
+  /* opacity: 1; */
+  border-radius: 30px;
 }
 /* .ant-layout-content { */
-    /* width:350px; */
-    /* } */
-    /* Desktop CSS */
-@media only screen and (min-width: 700px){
-    .upload-container{
-        text-align: center;
-        
-    }
-    
-    .anticon-paper-clip{
-        right: 20px;
-        width: 20px;
-    }
-    .login-form, .sign-up-form{
-        padding:0 100px;
-        text-align:center;
-        margin: auto;
-        width:40%;
-    }
-    /* .ant-upload.ant-upload-drag.ant-typography{
+/* width:350px; */
+/* } */
+/* Desktop CSS */
+@media only screen and (min-width: 700px) {
+  .upload-container {
+    text-align: center;
+  }
+
+  .anticon-paper-clip {
+    right: 20px;
+    width: 20px;
+  }
+  .login-form,
+  .sign-up-form {
+    padding: 0 100px;
+    text-align: center;
+    margin: auto;
+    width: 40%;
+  }
+  /* .ant-upload.ant-upload-drag.ant-typography{
         width: 40%;
         margin: auto;
     } */
-    .text-to-copy{
-        width: 40%;
-        margin: auto;
-    }
-    .ant-upload-list{
-        width: 40%;
-        margin: auto;
-    }
-    
+  .text-to-copy {
+    width: 40%;
+    margin: auto;
+  }
+  .ant-upload-list {
+    width: 40%;
+    margin: auto;
+  }
 }
 /* Mobile CSS */
-@media only screen and (max-width: 500px){
-    .about-page{
-        width: 80%;
-    }
-    .statistics{
-        width:100%;
-    }
-
+@media only screen and (max-width: 500px) {
+  .about-page {
+    width: 80%;
+  }
+  .statistics {
+    width: 100%;
+  }
 }

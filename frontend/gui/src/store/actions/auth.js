@@ -3,6 +3,7 @@ import * as actionTypes from './actionTypes';
 
 // need to add comments for each function here!
 export const authStart = () => {
+    console.log("from actions")
     return {
         type: actionTypes.AUTH_START
     }
@@ -52,7 +53,6 @@ export const authLogin = (email, password) => {
             const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
             const accounts = res.data.['accounts-info'];
             const username = accounts[email];
-            console.log("authLogin -> username", username)
             localStorage.setItem('token', token);
             localStorage.setItem('username', username);
             localStorage.setItem('expirationDate', expirationDate);

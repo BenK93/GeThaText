@@ -25,7 +25,7 @@ SECRET_KEY = '(oy0a0iai!l9b_l$2$13xsb^l)y9sj0+(+@0xg=jyswrbie3++'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -89,6 +89,12 @@ WSGI_APPLICATION = 'djTess.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'OPTIONS' : {
+    #         'read_default_file': '/etc/mysql/my.cnf','
+    #     }
+    # }
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),

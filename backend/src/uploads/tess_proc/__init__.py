@@ -1,1 +1,0 @@
-from .translate import scan_img

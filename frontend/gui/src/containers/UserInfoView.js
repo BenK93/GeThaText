@@ -1,13 +1,12 @@
-import React, { PureComponent } from 'react';
-import UserInfo from '../components/Accounts/UserInfo'
-
+import React, { PureComponent } from "react";
+import UserInfo from "../Components/Accounts/UserInfo";
 
 export default class UserInfoView extends PureComponent {
-    render() {
-        return (
-            <div>
-                <UserInfo/>                
-            </div>
-        )
-    }
+  render() {
+    return (
+      <div>
+        <UserInfo />
+      </div>
+    );
+  }
 }

@@ -1,14 +1,14 @@
 import React from "react";
 import { Route } from "react-router-dom";
 
-import UploadView from "./containers/UploadView";
+import UploadView from "./Containers/UploadView";
 
-import HomePage from "./containers/HomeView";
-import LoginView from "./containers/LoginView.js";
-import SignUpView from "./containers/SignUpView";
-import AboutView from "./containers/AboutView";
-import UserInfoView from "./containers/UserInfoView";
-import UserUploadsView from "./containers/UserUploadsView";
+import HomePage from "./Containers/HomeView";
+import LoginView from "./Containers/LoginView.js";
+import SignUpView from "./Containers/SignUpView";
+import AboutView from "./Containers/AboutView";
+import UserInfoView from "./Containers/UserInfoView";
+import UserUploadsView from "./Containers/UserUploadsView";
 
 const BaseRouter = () => (
   <div>

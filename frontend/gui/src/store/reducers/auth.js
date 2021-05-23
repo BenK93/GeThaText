@@ -8,6 +8,7 @@ const initialState = {
 }
 // commenting each function and understand it
 const authStart = (state, action) => {
+    console.log("from reducers")
     return updateObject(state, {
         error: null,
         loading: true
@@ -18,7 +19,7 @@ const authSuccess = (state, action) => {
     return updateObject(state, {
         token: action.token,
         error: null,
-        loading: false
+        loading: true
     });
 }
 
@@ -31,7 +32,8 @@ const authFail = (state, action) => {
 
 const authLogout = (state, action) => {
     return updateObject(state, {
-        token: null
+        token: null,
+        loading: false
     });
 }
 

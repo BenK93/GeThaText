@@ -78,7 +78,7 @@ class UploadDestroyView(DestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         upload_by_pk = Upload.objects.get(pk=request.query_params['pk'])
-        # check is user is assigned to that upload
+        # check if user is assigned to that upload
         if request.user == upload_by_pk.user:
             user_token = Token.objects.get(user=request.user)
             user_token = "Token " + str(user_token)
@@ -86,7 +86,7 @@ class UploadDestroyView(DestroyAPIView):
             if request.headers['Authorization'] == user_token:
                 upload_to_delete = Upload.objects.get(pk=request.query_params['pk'])
                 upload_to_delete.delete()
-                serializer = UploadSerialiezer(upload_to_delete)
+                serializer = UploadSerialiezer(upload_to_delete)                
                 response = {"deleted-file" : serializer.data}
                 return Response(response)
                 
