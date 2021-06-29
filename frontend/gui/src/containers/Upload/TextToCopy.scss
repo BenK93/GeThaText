@@ -1,0 +1,11 @@
+@import "./../../Shared/Style/Colors.scss";
+
+.text-to-copy-container {
+  text-align: center;
+  padding-top: 40px;
+}
+
+.text-to-copy {
+  box-shadow: rgb(0, 0, 0 / 25%) 0px 0px 5px 0px,
+    rgb(0, 0, 0 / 24%) 0px 0px 0px 0px;
+}

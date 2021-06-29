@@ -1,59 +1,68 @@
-from accounts.models import Account
+from ..models import Account
 from .serializers import AccountSerializer
-from rest_framework.views import APIView 
+from rest_framework.views import APIView
 from rest_framework.generics import (
     ListAPIView,
     RetrieveAPIView,
     CreateAPIView,
     DestroyAPIView,
-    UpdateAPIView
-    )
-from rest_framework import permissions
+    UpdateAPIView, get_object_or_404
+)
+from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_auth.views import LoginView
 
-class AccountsDetailView(RetrieveAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
-    permission_classes = (permissions.AllowAny, )
 
-    def get(self, request, *args, **kwargs):
-        queryset = Account.objects.all()
-        serializer = AccountSerializer(queryset, many=True)
-        return Response(serializer.data)
+# class AccountsDetailView(RetrieveAPIView):
+#     queryset = Account.objects.all()
+#     serializer_class = AccountSerializer
+#     permission_classes = (permissions.AllowAny,)
+#
+#     def get(self, request, *args, **kwargs):
+#         queryset = Account.objects.all()
+#         serializer = AccountSerializer(queryset, many=True)
+#         return Response(serializer.data)
+
 
 # need to fix for getting account by username
 class AccountDetailView(RetrieveAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
 
+    #  get user by email
     def get(self, request, *args, **kwargs):
-        user = get_object_or_404(Account, username=args.username)
-        return Response(AccountSerializer(user).data, status=status.HTTP_200_OK)
+        if request.query_params:
+            user = get_object_or_404(Account, email=request.query_params['email'])
+            return Response(AccountSerializer(user).data, status=status.HTTP_200_OK)
+        else:
+            details = {"detail" : "missing email"}
+            return Response(details, status=status.HTTP_400_BAD_REQUEST)
 
 
+# creating account
 class AccountCreateView(CreateAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-    permission_classes = (permissions.AllowAny, )
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, *args, **kwargs):
+        return Response({}, status=status.HTTP_200_OK)
 
 
 class AccountCounterView(RetrieveAPIView):
     # authentication_classes = [authentication.TokenAuthentication]
 
-    def get(self, request, format=None):
+    def get(self, request, *args, **kwargs):
         accounts = Account.objects.all()
-        custom_response = { "accounts-quantity" : len(accounts)}
+        custom_response = {"accounts-quantity": len(accounts)}
         return Response(custom_response)
 
-# return token + { email : username}
+
+# return token + account info
 class CustomLoginView(LoginView):
-    def get_response(self):        
-        orginal_response = super().get_response()
-        accounts = Account.objects.all()
-        accounts_usernames = {"accounts-info": {}}
-        for account in accounts:
-            accounts_usernames["accounts-info"][str(account)] = account.username
-        orginal_response.data.update(accounts_usernames)
-        return orginal_response
+    def get_response(self):
+        original_response = super().get_response()
+        user = get_object_or_404(Account, email=self.request.data['username'])
+        original_response.data.update(AccountSerializer(user).data)
+        return original_response

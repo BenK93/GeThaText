@@ -3,9 +3,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { connect } from "react-redux";
 import BaseRouter from "./routes";
 import "antd/dist/antd.css";
-import "./App.css";
-import * as actions from "./store/actions/auth";
-import CustomLayout from "./Containers/Layout";
+import * as actions from "./Shared/Redux/actions/auth";
+import CustomLayout from "./Containers/Layouts/Layout";
+
+//  need to go to .env file
+// client_secret = zgPLmSmW9iaOTAjYEMDhq8YlYdHkdmIZyYQMwufFKo30Hit9P8iBeNGorM5AFotSw9xb4Jl5fQZU7lbqlGfsMnXlHITSlXiZibxsd5HYzTHmdv96UhOsuv9m9n6RfdWN
+// client_id = oYIodrxo3fN6ENys67lZI5gBaI02n78A0q3vqlq6
 
 class App extends Component {
   state = {
@@ -23,7 +26,7 @@ class App extends Component {
       <div>
         <Router>
           <CustomLayout {...this.props}>
-            <BaseRouter />
+            <BaseRouter {...this.props} />
           </CustomLayout>
         </Router>
       </div>

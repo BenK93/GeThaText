@@ -1,0 +1,12 @@
+.about-page-content {
+  padding: 15px 0px 100px 0px;
+  width: 50%;
+  margin: auto;
+}
+
+/* Mobile CSS */
+@media only screen and (max-width: 500px) {
+  .about-page-content {
+    width: 80%;
+  }
+}

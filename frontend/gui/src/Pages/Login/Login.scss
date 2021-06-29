@@ -1,0 +1,88 @@
+@import "../../Shared/Style/Colors.scss";
+
+.input {
+  width: 300px;
+  display: inline-block;
+}
+.ant-row {
+  display: inline-block;
+}
+.mail-icon {
+  color: rgba(0, 0, 0, 0.25);
+}
+.lock-icon {
+  color: rgba(0, 0, 0, 0.25);
+}
+.login-buttons {
+  flex-direction: column;
+  justify-content: space-between;
+}
+.login-btn {
+  width: 300px;
+  height: 50px;
+}
+
+.loading-icon {
+  margin-top: 40px;
+  font-size: 60px;
+  color: #08c;
+}
+.fa {
+  margin-right: 10px;
+}
+.social-btn {
+  text-align: center;
+  margin: 10px 0px 10px 0px;
+  display: inline-block;
+  width: 300px;
+  box-shadow: rgb(0, 0, 0 / 24%) 0px -1px 8px 0px,
+    rgb(0, 0, 0 / 24%) 0px -1px 8px 0px;
+  height: 45px;
+}
+.social-login {
+  width: 300px;
+  display: inline-block;
+}
+.facebook-btn {
+  // text-align: left;
+  box-shadow: rgb(0, 0, 0 / 24%) 0px 0px 2px 0px,
+    rgb(0, 0, 0 / 24%) 0px 0px 0px 0px;
+  width: 300px;
+  font-family: Helvetica, sans-serif;
+  height: 35px;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+  display: inline-block;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background-color 0.3s, border-color 0.3s;
+  background-color: #4c69ba;
+  border: calc(0.06887vw + 0.67769px) solid #4c69ba;
+}
+
+.header-form {
+  // border-bottom: solid 1px #dedfe0;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  text-align: center;
+  color: #29303b;
+  display: inline;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 24px 64px 24px 24px;
+}
+
+.login-inner-form {
+  text-align: center;
+}
+
+// Desktop styling
+@media only screen and (min-width: 700px) {
+  .login-form {
+    // padding: 0 100px;
+    text-align: center;
+    margin: auto;
+    width: 40%;
+  }
+}

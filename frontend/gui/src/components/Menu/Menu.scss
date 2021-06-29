@@ -1,0 +1,29 @@
+@import "../../Shared/Style/Colors.scss";
+
+.logo-item {
+  font-size: 20px;
+}
+.menu {
+  display: inline-block;
+  position: fixed;
+  background: white;
+}
+.eye-icon {
+  margin: 10px;
+  font-size: 20px;
+}
+.right-item {
+  float: right;
+}
+.account-icon {
+  color: rgba(0, 0, 0, 0.25);
+}
+.home-icon {
+  height: 70px;
+  width: 70px;
+}
+@media only screen and (min-width: 700px) {
+  .menu-size {
+    width: 70%;
+  }
+}

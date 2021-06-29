@@ -1,0 +1,10 @@
+@import "../../Shared/Style/Colors.scss";
+
+.site-footer {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  min-height: 20vh;
+  text-align: center;
+  background-color: #bfdeff;
+}

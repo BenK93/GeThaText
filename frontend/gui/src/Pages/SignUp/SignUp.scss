@@ -1,0 +1,25 @@
+@import "../../Shared/Style/Colors.scss";
+
+// .header-form {
+//   // border-bottom: solid 1px #dedfe0;
+//   border-top-left-radius: 6px;
+//   border-top-right-radius: 6px;
+//   color: #29303b;
+//   display: block;
+//   font-weight: 700;
+//   font-size: 15px;
+//   padding: 24px 64px 24px 24px;
+// }
+
+.sign-up-form {
+  text-align: center;
+  margin: auto;
+  // width: 40%;
+}
+
+// Desktop styling
+@media only screen and (min-width: 700px) {
+  .sign-up-form {
+    width: 40%;
+  }
+}

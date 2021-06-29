@@ -1,0 +1,23 @@
+@import "../../Shared/Style/Colors.scss";
+
+.button-link {
+  margin-top: 16px;
+}
+
+.statistics {
+  box-shadow: #a7a7a7 6px -9px 8px 0px, rgb(0, 0, 0 / 24%) 0px -1px 8px 0px;
+  margin-bottom: 100px;
+  width: 50%;
+  text-align: center;
+  margin: auto;
+  padding: 50px;
+  background-color: #bfdeff;
+  /* opacity: 1; */
+  border-radius: 30px;
+}
+/* Mobile CSS */
+@media only screen and (max-width: 500px) {
+  .statistics {
+    width: 100%;
+  }
+}

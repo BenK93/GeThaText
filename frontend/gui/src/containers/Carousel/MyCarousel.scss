@@ -1,0 +1,71 @@
+@import "../../Shared/Style/Colors.scss";
+
+.a {
+  background-color: brown;
+}
+.carousel-content {
+  height: 100%;
+  width: 100%;
+  color: #41aaff;
+  text-align: center;
+  font-size: 25px;
+}
+.float {
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.first {
+  background-image: url(../../Assets/step1.jpg);
+}
+.second {
+  background-image: url(../../Assets/step2.jpg);
+}
+.third {
+  background-position-y: -150px;
+  background-image: url(../../Assets/step3.jpg);
+}
+.fourth {
+  background-image: url(../../Assets/step4.jpg);
+  background-position-y: -150px;
+}
+.carousel {
+  background-repeat: no-repeat;
+  /* background-size: 1400px 580px; */
+  background-size: cover;
+  //   background-position: top;
+  height: 400px;
+}
+.carousel-title {
+  /* margin: 0 500px; */
+  margin: auto;
+  border-radius: 25px;
+  width: auto;
+  position: inherit;
+  bottom: -200px;
+  /* height: 80px; */
+  color: white;
+  /* background-color: #000000; */
+}
+/* Mobile CSS */
+@media only screen and (max-width: 500px) {
+  .carousel-content {
+    padding-bottom: 70px;
+  }
+  .first {
+    // background-size: contain;
+    background-position-x: center;
+    background-size: 900px;
+  }
+  .second {
+    background-position-x: right;
+    background-size: 900px;
+  }
+  .third {
+    background-position-x: center;
+  }
+  .fourth {
+    background-position-x: center;
+    // background-position-y: -350px;
+  }
+}
