@@ -8,8 +8,9 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = (token) => {
+export const authSuccess = (user, token) => {
   return {
+    user: user,
     token: token,
     type: actionTypes.AUTH_SUCCESS,
   };
@@ -39,67 +40,64 @@ export const checkAuthTimeout = (expirationTime) => {
   };
 };
 
-export const facebookLogin = (response) => {
+export const facebookRegistration = (response) => {
   return (dispatch) => {
     dispatch(authStart());
-    debugger;
-    try {
-      axios
-        .post("http://127.0.0.1:8000/auth/convert-token", {
-          token: response.accessToken,
-          grant_type: "convert_token",
-          backend: "facebook",
-          client_id: "0lc8Vyira4xlClcmqzC3sBOXYS2vuLMXb1F2etds",
-          client_secret:
-            "tu9FU5zzvgixjSOb4iNVCwfxeLVWELGYh6cDmCdi2WARHNptD97Egd0YQkIrNaQdUZq3bs35esvJMk2AJ7mZZCNjRnPnk3ZRYVm5f2tDSV02lbjPvpx6Kio2ISLqmE2D",
-        })
-        .then((res) => {
-          debugger;
-          const token = res.data["access_token"];
-          const refresh_token = res.data["refresh_token"];
-          const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
-          const username = response["name"].replaceAll(" ", "");
-          localStorage.setItem("username", username);
-          localStorage.setItem("token", token);
-          localStorage.setItem("refresh_token", refresh_token);
-          localStorage.setItem("expirationDate", expirationDate);
-          dispatch(checkAuthTimeout(3600));
-          dispatch(authSuccess(token));
-        })
-        .catch((err) => {
-          dispatch(authFail(err));
-        });
-    } catch (e) {
-      dispatch(authFail(e));
-    }
+    axios
+      .post("http://127.0.0.1:8000/auth/convert-token", {
+        token: response.accessToken,
+        grant_type: "convert_token",
+        backend: "facebook",
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        client_secret: process.env.REACT_APP_CLIENT_SECRET_KEY,
+      })
+      .then((res) => {
+        debugger;
+        const token = res.data["access_token"];
+        const refresh_token = res.data["refresh_token"];
+        const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+        const username = response["name"].replaceAll(" ", "");
+        localStorage.setItem("username", username);
+        localStorage.setItem("token", token);
+        localStorage.setItem("refresh_token", refresh_token);
+        localStorage.setItem("expirationDate", expirationDate);
+        dispatch(checkAuthTimeout(expirationDate));
+        setTimeout(() => {
+          dispatch(authSuccess(username, token));
+        }, 2000);
+      })
+      .catch((err) => {
+        dispatch(authFail(err));
+      });
   };
 };
 
-export const googleLogin = (response) => {
+export const googleRegistration = (response) => {
   return (dispatch) => {
     dispatch(authStart());
-    debugger;
     try {
       axios
         .post("http://127.0.0.1:8000/auth/convert-token", {
           token: response.accessToken,
           grant_type: "convert_token",
           backend: "google-oauth2",
-          client_id: "0lc8Vyira4xlClcmqzC3sBOXYS2vuLMXb1F2etds",
-          client_secret:
-            "tu9FU5zzvgixjSOb4iNVCwfxeLVWELGYh6cDmCdi2WARHNptD97Egd0YQkIrNaQdUZq3bs35esvJMk2AJ7mZZCNjRnPnk3ZRYVm5f2tDSV02lbjPvpx6Kio2ISLqmE2D",
+          client_id: process.env.REACT_APP_CLIENT_ID,
+          client_secret: process.env.REACT_APP_CLIENT_SECRET_KEY,
         })
         .then((res) => {
           const token = res.data["access_token"];
           const refresh_token = res.data["refresh_token"];
           const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
           const username = response["profileObj"]["email"].split("@")[0];
+          localStorage.setItem("email", response["profileObj"]["email"]);
           localStorage.setItem("username", username);
           localStorage.setItem("token", token);
           localStorage.setItem("refresh_token", refresh_token);
           localStorage.setItem("expirationDate", expirationDate);
-          dispatch(checkAuthTimeout(3600));
-          dispatch(authSuccess(token));
+          dispatch(checkAuthTimeout(expirationDate));
+          setTimeout(() => {
+            dispatch(authSuccess(username, token));
+          }, 3000);
         })
         .catch((err) => {
           dispatch(authFail(err));
@@ -128,8 +126,10 @@ export const authLogin = (email, password) => {
         localStorage.setItem("email", res.data["email"]);
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("date_joined", res.data["date_joined"]);
-        dispatch(checkAuthTimeout(3600));
-        dispatch(authSuccess(token));
+        dispatch(checkAuthTimeout(expirationDate));
+        setTimeout(() => {
+          dispatch(authSuccess(username, token));
+        }, 2000);
       })
       .catch((err) => {
         dispatch(authFail(err));
@@ -153,8 +153,9 @@ export const authSignup = (username, email, password1, password2) => {
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
         localStorage.setItem("expirationDate", expirationDate);
-        dispatch(authSuccess(token));
-        dispatch(checkAuthTimeout(3600));
+        setTimeout(() => {
+          dispatch(authSuccess(username, token));
+        }, 2000);
       })
       .catch((err) => {
         dispatch(authFail(err));
@@ -172,7 +173,7 @@ export const authCheckState = () => {
       if (expirationDate <= new Date()) {
         dispatch(logout());
       } else {
-        dispatch(authSuccess(token));
+        // dispatch(authSuccess(username, token));
         dispatch(
           checkAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000
@@ -187,5 +188,21 @@ export const authCheckState = () => {
 export const authUploadImage = () => {
   return (dispatch) => {
     console.log("work");
+  };
+};
+// social Login
+export const socialUserLogin = (data, email) => {
+  return (dispatch) => {
+    const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+    const token = data.userInfo.token;
+    const username = data.userInfo.personal.username;
+    localStorage.setItem("token", token);
+    localStorage.setItem("email", email);
+    localStorage.setItem("username", username);
+    localStorage.setItem("expirationDate", expirationDate);
+    setTimeout(() => {
+      dispatch(authSuccess(username, token));
+    }, 2000);
+    dispatch(checkAuthTimeout(expirationDate));
   };
 };

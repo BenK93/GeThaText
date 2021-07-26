@@ -2,7 +2,7 @@ import React from "react";
 import "./Login.scss";
 import ReCAPTCHA from "react-google-recaptcha";
 import { LockTwoTone, MailTwoTone, LoadingOutlined } from "@ant-design/icons";
-import { Form, Input, Button, Divider } from "antd";
+import { Form, Input, Button, message } from "antd";
 import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import { connect } from "react-redux";
@@ -10,12 +10,13 @@ import { NavLink } from "react-router-dom";
 import { Typography } from "antd";
 import * as actions from "../../Shared/Redux/actions/auth";
 import MyLogo from "../../Components/Logo/Logo";
+import axios from "axios";
 
 const { Text } = Typography;
 
 const FormItem = Form.Item;
 
-class NormalLoginForm extends React.Component {
+class LoginView extends React.Component {
   state = {
     LoginFailed: false,
     reCaptchaResponse: null,
@@ -29,33 +30,54 @@ class NormalLoginForm extends React.Component {
 
   loginRedirect = (path) => {
     if (!this.props.error) {
-      setTimeout(() => {
-        this.props.history.push(path);
-      }, 3000);
+      this.props.history.push(path);
     } else {
-      this.setState({ LoginFailed: true });
+      message.error("Login details were incorrect, Please try again!", 3);
     }
   };
 
   handleSubmit = (values) => {
-    if (this.state.reCaptchaResponse) {
-      this.props.onAuth(values.email, values.password);
+    this.props.onAuth(values.email, values.password);
+    setTimeout(() => {
       this.loginRedirect("/upload");
-    }
+    }, 2000);
+  };
+
+  checkUserRegistered = (response, user, email, facebook) => {
+    this.props.authStart();
+    // true for Facebook false for Google
+    axios
+      .get(`http://localhost:8000/account/user?user=${user}`)
+      .then((res) => {
+        console.log("success");
+        this.props.socialUserLogin(res.data, email);
+      })
+      .catch((e) => {
+        console.log("fail");
+        if (facebook) {
+          this.props.facebookRegistration(response);
+        } else {
+          this.props.googleRegistration(response);
+        }
+      });
+    setTimeout(() => {
+      this.loginRedirect("/upload");
+    }, 2000);
   };
 
   responseFacebook = async (response) => {
-    console.log(
-      "🚀 ~ file: LoginView.js ~ line 48 ~ NormalLoginForm ~ responseFacebook= ~ response",
-      response
-    );
-    // await this.props.facebookLogin(response);
-    // this.loginRedirect("/upload");
+    console.table(response);
+    let user = response["name"].split(" ").join("");
+    this.checkUserRegistered(response, user, response.email, true);
   };
 
   responseGoogle = async (response) => {
-    await this.props.googleLogin(response);
-    this.loginRedirect("/upload");
+    let user = response.profileObj.email.split("@")[0];
+    this.checkUserRegistered(response, user, response.profileObj.email, false);
+  };
+
+  loginFailed = (response) => {
+    message.error("Social Login Fails", 3);
   };
 
   render() {
@@ -67,11 +89,6 @@ class NormalLoginForm extends React.Component {
               <h3>
                 Login To Your <MyLogo /> Account
               </h3>
-            </div>
-            <div>
-              {this.state.LoginFailed ? (
-                <Text type="danger">Incorrect Email or Password </Text>
-              ) : null}
             </div>
             {this.props.loading ? (
               <div>
@@ -120,27 +137,7 @@ class NormalLoginForm extends React.Component {
                     placeholder="Password"
                   />
                 </FormItem>
-                <div className="social-login">
-                  <FacebookLogin
-                    cssClass="facebook-btn"
-                    redirectUri="/upload"
-                    textButton="Login"
-                    appId="2934158403463904"
-                    autoLoad={false}
-                    icon="fa-facebook"
-                    fields="name,email,picture"
-                    callback={this.responseFacebook}
-                  />
-                  <GoogleLogin
-                    disabledStyle={{}}
-                    className="social-btn"
-                    clientId="536411313406-37g1genpkpiplf1767frmm7mitbqnoi4.apps.googleusercontent.com"
-                    buttonText="Login"
-                    onSuccess={this.responseGoogle}
-                    onFailure={this.responseGoogle}
-                    cookiePolicy={"single_host_origin"}
-                  />
-                </div>
+
                 <FormItem
                   style={{ display: "inline-block" }}
                   rules={[
@@ -176,6 +173,28 @@ class NormalLoginForm extends React.Component {
                     </NavLink>
                   </div>
                 </div>
+                <div className="social-login">
+                  <FacebookLogin
+                    onFailure={this.loginFailed}
+                    cssClass="facebook-btn"
+                    redirectUri="/upload"
+                    textButton="Login"
+                    appId={process.env.REACT_APP_FACEBOOK_APP_ID}
+                    autoLoad={false}
+                    icon="fa-facebook"
+                    fields="name,email,picture"
+                    callback={this.responseFacebook}
+                  />
+                  <GoogleLogin
+                    disabledStyle={{}}
+                    className="social-btn"
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                    buttonText="Login"
+                    onSuccess={this.responseGoogle}
+                    onFailure={this.loginFailed}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                </div>
               </Form>
             )}
           </div>
@@ -194,11 +213,16 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    authStart: () => dispatch(actions.authStart()),
     onAuth: (username, password) =>
       dispatch(actions.authLogin(username, password)),
-    facebookLogin: (response) => dispatch(actions.facebookLogin(response)),
-    googleLogin: (response) => dispatch(actions.googleLogin(response)),
+    facebookRegistration: (response) =>
+      dispatch(actions.facebookRegistration(response)),
+    googleRegistration: (response) =>
+      dispatch(actions.googleRegistration(response)),
+    socialUserLogin: (data, email) =>
+      dispatch(actions.socialUserLogin(data, email)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NormalLoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginView);

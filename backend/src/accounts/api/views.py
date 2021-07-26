@@ -1,3 +1,5 @@
+from rest_framework.authtoken.models import Token
+
 from ..models import Account
 from .serializers import AccountSerializer
 from rest_framework.views import APIView
@@ -13,17 +15,6 @@ from rest_framework.response import Response
 from rest_auth.views import LoginView
 
 
-# class AccountsDetailView(RetrieveAPIView):
-#     queryset = Account.objects.all()
-#     serializer_class = AccountSerializer
-#     permission_classes = (permissions.AllowAny,)
-#
-#     def get(self, request, *args, **kwargs):
-#         queryset = Account.objects.all()
-#         serializer = AccountSerializer(queryset, many=True)
-#         return Response(serializer.data)
-
-
 # need to fix for getting account by username
 class AccountDetailView(RetrieveAPIView):
     queryset = Account.objects.all()
@@ -33,8 +24,16 @@ class AccountDetailView(RetrieveAPIView):
     #  get user by email
     def get(self, request, *args, **kwargs):
         if request.query_params:
-            user = get_object_or_404(Account, email=request.query_params['email'])
-            return Response(AccountSerializer(user).data, status=status.HTTP_200_OK)
+            user = get_object_or_404(Account, username=request.query_params['user'])
+            user_token = Token.objects.get(user=request.query_params['user'])
+            response = {"userInfo": {
+                "token": str(user_token),
+                "personal":AccountSerializer(user).data
+            } }
+            if user:
+                return Response(response, status=status.HTTP_200_OK)
+            else:
+                Response({"detail": "No user found"}, status=status.HTTP_404_NOT_FOUND)
         else:
             details = {"detail" : "missing email"}
             return Response(details, status=status.HTTP_400_BAD_REQUEST)

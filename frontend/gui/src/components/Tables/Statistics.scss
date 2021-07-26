@@ -11,9 +11,15 @@
   text-align: center;
   margin: auto;
   padding: 50px;
-  background-color: #bfdeff;
+  background-color: $statistics;
   /* opacity: 1; */
   border-radius: 30px;
+}
+.statistic-table-con-buttons {
+  place-content: center space-evenly;
+  flex-direction: row;
+  align-items: baseline;
+  display: flex;
 }
 /* Mobile CSS */
 @media only screen and (max-width: 500px) {

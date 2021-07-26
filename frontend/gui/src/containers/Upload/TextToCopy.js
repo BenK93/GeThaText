@@ -1,23 +1,17 @@
 import React from "react";
 import "./TextToCopy.scss";
-import { Typography, Input, Button, Divider } from "antd";
-import { CopyToClipboard } from "react-copy-to-clipboard";
-import { ArrowDownOutlined, CopyOutlined } from "@ant-design/icons";
-const { Text, Paragraph, Title } = Typography;
+import { Typography, Input, Divider } from "antd";
+import { ArrowDownOutlined } from "@ant-design/icons";
+const { Text, Title } = Typography;
 const { TextArea } = Input;
 class TextToCopy extends React.Component {
   state = {
     value: "Noise image to test Tesseract OCR",
-    copied: false,
   };
 
   changeText = (params) => {
-    this.setState({ value: params.target.value, copied: false });
+    this.setState({ value: params.target.value });
   };
-
-  componentDidMount() {
-    this.setState({ copied: false });
-  }
 
   render() {
     return (
@@ -27,31 +21,16 @@ class TextToCopy extends React.Component {
             <Title level={2} style={{ fontFamily: "Arial Black" }} mark={true}>
               Text Of The Image File{" "}
             </Title>
-            <ArrowDownOutlined style={{ fontSize: "36px", color: "#08c" }} />
+            <ArrowDownOutlined className="arrow-icon-upload" />
           </div>
-          <TextArea
+          <textarea
             className="text-to-copy"
             value={this.props.text}
             onChange={({ target: { value } }) =>
               this.changeText({ target: { value } })
             }
-            autoSize={{ minRows: 7, maxRows: 15 }}
+            rows={10}
           />
-          <Divider></Divider>
-          <CopyToClipboard
-            text={this.props.text}
-            onCopy={() => this.setState({ copied: true })}
-          >
-            <Button
-              type="primary"
-              shape="round"
-              icon={<CopyOutlined />}
-              size={10}
-            >
-              Copy Text
-            </Button>
-          </CopyToClipboard>
-          {this.state.copied ? <Paragraph>Coppied!</Paragraph> : null}
         </Text>
       </div>
     );

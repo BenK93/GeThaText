@@ -6,19 +6,16 @@ import "antd/dist/antd.css";
 import * as actions from "./Shared/Redux/actions/auth";
 import CustomLayout from "./Containers/Layouts/Layout";
 
-//  need to go to .env file
-// client_secret = zgPLmSmW9iaOTAjYEMDhq8YlYdHkdmIZyYQMwufFKo30Hit9P8iBeNGorM5AFotSw9xb4Jl5fQZU7lbqlGfsMnXlHITSlXiZibxsd5HYzTHmdv96UhOsuv9m9n6RfdWN
-// client_id = oYIodrxo3fN6ENys67lZI5gBaI02n78A0q3vqlq6
-
 class App extends Component {
   state = {
-    title: "",
-    content: "",
-    image: null,
+    token: false,
   };
 
   componentDidMount() {
-    // this.props.onTryAutoSignup();
+    const token = localStorage.getItem("token");
+    if (token) {
+      this.setState({ token: true });
+    }
   }
 
   render() {
@@ -26,7 +23,7 @@ class App extends Component {
       <div>
         <Router>
           <CustomLayout {...this.props}>
-            <BaseRouter {...this.props} />
+            <BaseRouter token={this.state.token} {...this.props} />
           </CustomLayout>
         </Router>
       </div>

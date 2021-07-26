@@ -14,14 +14,22 @@ import {
   LogoutOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
-import MyLogo from "../Logo/Logo";
+import MyLogo from "../../Components/Logo/Logo";
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 
 class MyMenu extends React.Component {
   state = {
     token: false,
+    collapsed: false,
   };
+
+  toggleCollapsed = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  };
+
   userLogout = () => {
     this.props.logout();
     this.setState({ token: false });
@@ -29,16 +37,10 @@ class MyMenu extends React.Component {
   };
   componentDidMount() {
     const token = localStorage.getItem("token");
-    console.log(
-      "🚀 ~ file: MyMenu.js ~ line 29 ~ MyMenu ~ componentWillUnmount ~ token",
-      token
-    );
-    if (token != null) {
+    if (token) {
       this.setState({ token: true });
     }
   }
-
-  // componentWillUnmount() {}
 
   render() {
     return (
@@ -61,38 +63,39 @@ class MyMenu extends React.Component {
         </Menu.Item>
         <Menu.Item key="2">
           <Link to="/upload">
-            <CloudUploadOutlined /> <strong>Simple Upload</strong>
+            <CloudUploadOutlined /> <strong>Magic Upload</strong>
           </Link>
         </Menu.Item>
         <Menu.Item key="3">
           <Link to="/about">
-            <BulbTwoTone /> <strong>About Us</strong>
+            <BulbTwoTone /> <strong>About</strong>
           </Link>
         </Menu.Item>
 
         {this.props.isAuthenticated | this.state.token ? (
           <SubMenu
+            key="4"
+            icon={<UserOutlined type="user" className="account-icon" />}
             className="right-item"
-            title={
-              <span>
-                <UserOutlined type="user" className="account-icon" />{" "}
-                <strong>Account</strong>
-              </span>
-            }
+            title={<strong>Account</strong>}
           >
-            <MenuItemGroup title="Menu Options">
+            <MenuItemGroup title={`Hey ${this.props.user}`}>
               <Menu.Item key="setting:3">
                 <Link to="/account-info">
                   <ContainerTwoTone /> <strong>My Profile</strong>
                 </Link>
               </Menu.Item>
-              <Menu.Item onClick={this.userLogout} key="setting:1">
-                <LogoutOutlined /> <strong>Logout</strong>
+              <Menu.Item
+                icon={<LogoutOutlined />}
+                onClick={this.userLogout}
+                key="setting:1"
+              >
+                <strong>Logout</strong>
               </Menu.Item>
             </MenuItemGroup>
           </SubMenu>
         ) : (
-          <Menu.Item className="right-item" key="10">
+          <Menu.Item key="3" className="right-item" key="10">
             <Link to="/login">
               <LoginOutlined /> <strong>Login</strong>
             </Link>
@@ -103,9 +106,16 @@ class MyMenu extends React.Component {
   }
 }
 
+const maxStateToProps = (state) => {
+  return {
+    user: state.user,
+    token: state.token,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     logout: () => dispatch(actions.logout()),
   };
 };
-export default connect(null, mapDispatchToProps)(MyMenu);
+export default connect(maxStateToProps, mapDispatchToProps)(MyMenu);

@@ -55,8 +55,8 @@ export default class AboutView extends PureComponent {
           </Title>
           <Paragraph>
             <Text>
-              Click on the Download Button{" "}
-              <DownloadOutlined> </DownloadOutlined> after a few moments you
+              Click on the Image Upload Button{" "}
+              <DownloadOutlined/>  after a few moments you
               will see two more icons: <br></br>
               <EyeTwoTone /> - Click to See the file text<br></br>
               <DeleteTwoTone /> - Click To Delete your file <br></br>

@@ -2,7 +2,8 @@ import React from "react";
 import "./SignUp.scss";
 import ReCAPTCHA from "react-google-recaptcha";
 import { MailTwoTone, LockTwoTone, UserOutlined } from "@ant-design/icons";
-import { Form, Input, Button } from "antd";
+import { Form, message, Button } from "antd";
+import FormItemInput from "../../Components/FormElements/Inputs/FormItemInput";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../Shared/Redux/actions/auth";
@@ -15,6 +16,21 @@ class RegistrationForm extends React.Component {
     reCaptchaResponse: null,
   };
 
+  signupRedirect = (path) => {
+    if (!this.props.error) {
+      setTimeout(() => {
+        this.props.history.push(path);
+      }, 300);
+    } else {
+      console.table(this.props.error.response.data);
+      if (this.props.error.response.data.email) {
+        message.error(this.props.error.response.data.email);
+      } else {
+        message.error(this.props.error.response.data.username);
+      }
+    }
+  };
+
   handleSubmit = (values) => {
     this.props.onAuth(
       values.username,
@@ -22,9 +38,9 @@ class RegistrationForm extends React.Component {
       values.password,
       values.confirm
     );
-    if (!this.props.error) {
-      this.props.history.push("/");
-    }
+    setTimeout(() => {
+      this.signupRedirect("/upload");
+    }, 1500);
   };
 
   handleConfirmBlur = (e) => {
@@ -58,18 +74,13 @@ class RegistrationForm extends React.Component {
       <div>
         <Form onFinish={this.handleSubmit} className="sign-up-form">
           <h3>Signup and Keep Track of your Uploads</h3>
-          <FormItem
-            style={{ display: "inline-block" }}
-            className="input"
+          <FormItemInput
             name="username"
             rules={[{ required: true, message: "Please input your Username!" }]}
-          >
-            <Input prefix={<UserOutlined />} placeholder="Username" />
-          </FormItem>
-
-          <FormItem
-            style={{ display: "inline-block" }}
-            className="input"
+            icon={<UserOutlined />}
+            placeholder="Username"
+          />
+          <FormItemInput
             name="email"
             rules={[
               {
@@ -81,13 +92,10 @@ class RegistrationForm extends React.Component {
                 message: "Please input your E-mail!",
               },
             ]}
-          >
-            <Input prefix={<MailTwoTone type="mail" />} placeholder="Email" />
-          </FormItem>
-
-          <FormItem
-            style={{ display: "inline-block" }}
-            className="input"
+            icon={<MailTwoTone type="mail" />}
+            placeholder="Email"
+          />
+          <FormItemInput
             name="password"
             rules={[
               {
@@ -98,18 +106,11 @@ class RegistrationForm extends React.Component {
                 validator: this.validatePassword,
               },
             ]}
-            hasFeedback
-          >
-            <Input
-              prefix={<LockTwoTone type="lock" />}
-              type="password"
-              placeholder="Password"
-            />
-          </FormItem>
-
-          <FormItem
-            style={{ display: "inline-block" }}
-            className="input"
+            icon={<LockTwoTone type="lock" />}
+            inputType={"password"}
+            placeholder="Password"
+          />
+          <FormItemInput
             name="confirm"
             rules={[
               {
@@ -125,23 +126,21 @@ class RegistrationForm extends React.Component {
                 },
               }),
             ]}
-            hasFeedback
-          >
-            <Input
-              prefix={<LockTwoTone type="lock" />}
-              type="password"
-              placeholder="Confirm Password"
-              onBlur={this.handleConfirmBlur}
-            />
-          </FormItem>
+            icon={<LockTwoTone type="lock" />}
+            inputType={"password"}
+            placeholder="Confirm Password"
+            onBlur={this.handleConfirmBlur}
+          />
+
           <FormItem style={{ display: "inline-block" }} className="input">
             <ReCAPTCHA
               sitekey="6Ld-btkZAAAAAKsc2MhmB7nJ3hgr_2U77ygYE2jK"
               onChange={this.verifyCallback}
             />
           </FormItem>
-          <FormItem>
+          <div className="login-buttons">
             <Button
+              className="login-btn"
               disabled={!this.state.reCaptchaResponse}
               type="primary"
               htmlType="submit"
@@ -149,12 +148,14 @@ class RegistrationForm extends React.Component {
             >
               Sign Up
             </Button>
-            Or
-            <NavLink style={{ marginRight: "10px" }} to="/login/">
-              {" "}
-              Login
-            </NavLink>
-          </FormItem>
+            <div>
+              Or
+              <NavLink style={{ marginRight: "10px" }} to="/login/">
+                {" "}
+                Login
+              </NavLink>
+            </div>
+          </div>
         </Form>
       </div>
     );

@@ -1,26 +1,35 @@
 import React from "react";
-import "./Upload.scss";
 import axios from "axios";
-import { connect } from "react-redux";
-import TextToCopy from "../../Containers/Upload/TextToCopy";
 import * as actions from "../../Shared/Redux/actions/auth";
-import { Upload, Button, message } from "antd";
-import { UploadOutlined, DeleteTwoTone, EyeTwoTone } from "@ant-design/icons";
+import { connect } from "react-redux";
+import "./Upload.scss";
+import TextToCopy from "../../Containers/Upload/TextToCopy";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import {
+  UploadOutlined,
+  DeleteTwoTone,
+  EyeTwoTone,
+  CopyOutlined,
+  CheckCircleTwoTone,
+} from "@ant-design/icons";
+import BasicButton from "../../Components/Buttons/BasicButton";
+import { Upload, message, Typography, Button } from "antd";
+const { Paragraph } = Typography;
 
+let fileList = [
+  {
+    uid: "-1",
+    name: "Example-test.png/jpeg",
+    url: "https://upload.wikimedia.org/wikipedia/commons/4/47/Example_01.png",
+    status: "success",
+  },
+];
 class UploadView extends React.PureComponent {
   state = {
     copied: false,
     uploads: {},
     chosenImageText: "Noise image to test Tesseract OCR",
   };
-  fileList = [
-    {
-      uid: "-1",
-      name: "Example-test.png/jpeg",
-      url: "https://upload.wikimedia.org/wikipedia/commons/4/47/Example_01.png",
-      status: "success",
-    },
-  ];
 
   fileUpload = ({ onSuccess, onError, file }) => {
     const checkInfo = () => {
@@ -30,34 +39,29 @@ class UploadView extends React.PureComponent {
         } else {
           let formData = new FormData();
           let user = localStorage.getItem("username");
-          let token = localStorage.getItem("token");
-          if (!token) {
-            message.error("You forgot to Login", 3);
-            return onError("Not Authorized");
-          }
           if (user != null) {
             formData.set("user", user);
+          } else {
+            message.error("You Forgot To Login", 3);
+            return onError("Not Authorized");
           }
           formData.set("image", this.imageData);
-          message.loading("Uploading");
           axios
-            .post("http://127.0.0.1:8000/upload/", formData, {
-              headers: {
-                Authorization: "Token " + token,
-              },
-            })
+            .post("http://127.0.0.1:8000/upload/", formData)
             .then((respond) => {
               const uploads = {
                 ...this.state.uploads,
                 [this.imageData.name]: respond.data["img_content"],
               };
               this.setState(() => ({ uploads }));
-              onSuccess(null, file);
+              onSuccess("Upload Successfully", file);
             })
             .catch((e) => {
-              message.error(e.response.data.detail);
+              if (e.response) {
+                message.error(e.response.data.detail);
+              }
               console.log(e);
-              onError();
+              onError("Upload Error");
             });
         }
       }, 100);
@@ -74,7 +78,10 @@ class UploadView extends React.PureComponent {
   };
 
   getText = () => {
-    this.setState({ chosenImageText: this.state.uploads[this.imageData.name] });
+    this.setState({
+      chosenImageText: this.state.uploads[this.imageData.name],
+      copied: false,
+    });
   };
 
   removeImg = () => {
@@ -94,50 +101,67 @@ class UploadView extends React.PureComponent {
 
   render() {
     return (
-      <div style={{ padding: "30px 30px", textAlign: "center" }}>
+      <div className="upload-container">
         <Upload
           beforeUpload={this.beforeUpload}
-          onDrop={() => console.log("-----dropped-------")}
-          maxCount={5}
           listType="picture"
           accept=".png, .jpeg, .jpg"
           onDownload={this.getImageName}
           onChange={this.onChange}
           customRequest={this.fileUpload}
-          defaultFileList={[...this.fileList]}
+          defaultFileList={[...fileList]}
           showUploadList={{
             showDownloadIcon: true,
             downloadIcon: (
               <EyeTwoTone
+                twoToneColor="#10d403"
                 title="Get Text"
                 onClick={this.getText}
                 style={{ fontSize: "20px" }}
-              >
-                {/* {" "} */}
-              </EyeTwoTone>
+              ></EyeTwoTone>
             ),
             showRemoveIcon: true,
             removeIcon: (
               <DeleteTwoTone
+                twoToneColor="#00000"
                 onClick={this.removeImg}
                 style={{ fontSize: "20px" }}
               />
             ),
           }}
         >
-          <Button
+          <BasicButton
             title="Upload Image"
             type="primary"
             onSubmit={this.handleClick}
             icon={<UploadOutlined />}
           >
             Image Upload
-          </Button>
+          </BasicButton>
         </Upload>
-        <TextToCopy
-          copied={this.state.copied}
-          text={this.state.chosenImageText ? this.state.chosenImageText : null}
-        />
+        <TextToCopy text={this.state.chosenImageText} />
+        <CopyToClipboard
+          text={this.state.chosenImageText}
+          onCopy={() => this.setState({ copied: true })}
+        >
+          <Button
+            type="primary"
+            shape="round"
+            icon={<CopyOutlined />}
+            size={10}
+          >
+            <strong>Copy Text</strong>
+          </Button>
+        </CopyToClipboard>
+        {this.state.copied && (
+          <Paragraph style={{ marginTop: "10px" }}>
+            Copied!
+            <CheckCircleTwoTone
+              style={{ fontSize: "30px" }}
+              twoToneColor="#52c41a"
+            />
+          </Paragraph>
+        )}
       </div>
     );
   }
