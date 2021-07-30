@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UploadsTable from "../../Components/Tables/UploadsTable";
-import { connect } from "react-redux";
-import * as actions from "../../Shared/Redux/actions/auth";
-import { Typography, Input, Tooltip, Row, Col } from "antd";
-import {
-  UserOutlined,
-  InfoCircleOutlined,
-  MailTwoTone,
-} from "@ant-design/icons";
+import { Typography, Input } from "antd";
+import { UserOutlined, MailTwoTone } from "@ant-design/icons";
 import "./UserInfo.scss";
 
 const { Title } = Typography;
@@ -67,7 +61,6 @@ const UserInfoView = () => {
           <Input
             disabled
             addonBefore="First Name:"
-            onChange={(a, b) => console.log(a, b)}
             value={profile.first_name}
           />
         )}

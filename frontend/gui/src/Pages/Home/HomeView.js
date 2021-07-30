@@ -21,7 +21,7 @@ class HomePage extends React.Component {
   };
 
   getAccount = () => {
-    if (this.state.accounts == 0) {
+    if (this.state.accounts === 0) {
       axios
         .get("http://127.0.0.1:8000/account/quantity/")
         .then((respond) => {
@@ -34,7 +34,7 @@ class HomePage extends React.Component {
   };
 
   getUploads = () => {
-    if (this.state.uploads == 0) {
+    if (this.state.uploads === 0) {
       axios
         .get("http://127.0.0.1:8000/upload/quantity/")
         .then((respond) => {
@@ -86,7 +86,6 @@ class HomePage extends React.Component {
           <Alert
             type="info"
             style={{ textAlign: "center" }}
-            message="Guide Web Usage"
             showIcon
             message={
               <TextLoop interval={4500} mask>

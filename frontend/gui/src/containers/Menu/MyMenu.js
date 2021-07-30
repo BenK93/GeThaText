@@ -95,7 +95,7 @@ class MyMenu extends React.Component {
             </MenuItemGroup>
           </SubMenu>
         ) : (
-          <Menu.Item key="3" className="right-item" key="10">
+          <Menu.Item key="10" className="right-item">
             <Link to="/login">
               <LoginOutlined /> <strong>Login</strong>
             </Link>

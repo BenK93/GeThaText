@@ -61,7 +61,7 @@ export const facebookRegistration = (response) => {
         localStorage.setItem("token", token);
         localStorage.setItem("refresh_token", refresh_token);
         localStorage.setItem("expirationDate", expirationDate);
-        dispatch(checkAuthTimeout(expirationDate));
+        // dispatch(checkAuthTimeout(expirationDate));
         setTimeout(() => {
           dispatch(authSuccess(username, token));
         }, 2000);
@@ -94,7 +94,7 @@ export const googleRegistration = (response) => {
           localStorage.setItem("token", token);
           localStorage.setItem("refresh_token", refresh_token);
           localStorage.setItem("expirationDate", expirationDate);
-          dispatch(checkAuthTimeout(expirationDate));
+          // dispatch(checkAuthTimeout(expirationDate));
           setTimeout(() => {
             dispatch(authSuccess(username, token));
           }, 3000);
@@ -126,7 +126,7 @@ export const authLogin = (email, password) => {
         localStorage.setItem("email", res.data["email"]);
         localStorage.setItem("expirationDate", expirationDate);
         localStorage.setItem("date_joined", res.data["date_joined"]);
-        dispatch(checkAuthTimeout(expirationDate));
+        // dispatch(checkAuthTimeout(expirationDate));
         setTimeout(() => {
           dispatch(authSuccess(username, token));
         }, 2000);
@@ -203,6 +203,6 @@ export const socialUserLogin = (data, email) => {
     setTimeout(() => {
       dispatch(authSuccess(username, token));
     }, 2000);
-    dispatch(checkAuthTimeout(expirationDate));
+    // dispatch(checkAuthTimeout(expirationDate));
   };
 };

@@ -25,6 +25,7 @@ export default class AboutView extends PureComponent {
         <Image
           preview={false}
           height={400}
+          width={"100%"}
           src={myImage}
         />
         <div className="about-page-content">

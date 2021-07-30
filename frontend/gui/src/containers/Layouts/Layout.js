@@ -2,7 +2,6 @@ import React from "react";
 import "./Layout.scss";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import * as actions from "../../Shared/Redux/actions/auth";
 import { Layout } from "antd";
 import MyMenu from "../Menu/MyMenu";
 import MyFooter from "../../Components/Footer/MyFooter";

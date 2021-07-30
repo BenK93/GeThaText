@@ -1,9 +1,8 @@
 import React from "react";
 import "./TextToCopy.scss";
-import { Typography, Input, Divider } from "antd";
+import { Typography } from "antd";
 import { ArrowDownOutlined } from "@ant-design/icons";
 const { Text, Title } = Typography;
-const { TextArea } = Input;
 class TextToCopy extends React.Component {
   state = {
     value: "Noise image to test Tesseract OCR",

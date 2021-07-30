@@ -7,12 +7,9 @@ import FacebookLogin from "react-facebook-login";
 import GoogleLogin from "react-google-login";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Typography } from "antd";
 import * as actions from "../../Shared/Redux/actions/auth";
 import MyLogo from "../../Components/Logo/Logo";
 import axios from "axios";
-
-const { Text } = Typography;
 
 const FormItem = Form.Item;
 
@@ -40,7 +37,7 @@ class LoginView extends React.Component {
     this.props.onAuth(values.email, values.password);
     setTimeout(() => {
       this.loginRedirect("/upload");
-    }, 2000);
+    }, 2500);
   };
 
   checkUserRegistered = (response, user, email, facebook) => {
@@ -49,11 +46,9 @@ class LoginView extends React.Component {
     axios
       .get(`http://localhost:8000/account/user?user=${user}`)
       .then((res) => {
-        console.log("success");
         this.props.socialUserLogin(res.data, email);
       })
       .catch((e) => {
-        console.log("fail");
         if (facebook) {
           this.props.facebookRegistration(response);
         } else {
@@ -66,7 +61,6 @@ class LoginView extends React.Component {
   };
 
   responseFacebook = async (response) => {
-    console.table(response);
     let user = response["name"].split(" ").join("");
     this.checkUserRegistered(response, user, response.email, true);
   };
@@ -76,7 +70,7 @@ class LoginView extends React.Component {
     this.checkUserRegistered(response, user, response.profileObj.email, false);
   };
 
-  loginFailed = (response) => {
+  loginFailed = () => {
     message.error("Social Login Fails", 3);
   };
 
