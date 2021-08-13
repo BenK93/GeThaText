@@ -10,10 +10,13 @@ import {
   LoginOutlined,
   ContainerTwoTone,
 } from "@ant-design/icons";
-import BasicButton from "../../Components/Buttons/BasicButton";
+import BasicButton from "../../Components/Buttons/BasicButton.js";
 import ImageCarousel from "../../Containers/Carousel/MyCarousel.js";
 import StatisticTable from "../../Components/Tables/StatisticTable";
 const { Paragraph, Title, Text } = Typography;
+
+axios.defaults.withCredentials = true;
+
 class HomePage extends React.Component {
   state = {
     accounts: 0,
@@ -23,7 +26,7 @@ class HomePage extends React.Component {
   getAccount = () => {
     if (this.state.accounts === 0) {
       axios
-        .get("http://127.0.0.1:8000/account/quantity/")
+        .get("/api/account/quantity/")
         .then((respond) => {
           this.setState({ accounts: respond.data["accounts-quantity"] });
         })
@@ -35,8 +38,8 @@ class HomePage extends React.Component {
 
   getUploads = () => {
     if (this.state.uploads === 0) {
-      axios
-        .get("http://127.0.0.1:8000/upload/quantity/")
+	    axios
+        .get("/api/upload/quantity/")
         .then((respond) => {
           this.setState({ uploads: respond.data["uploads-quantity"] });
         })

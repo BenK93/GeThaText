@@ -14,10 +14,11 @@ logging.basicConfig(filename='readingImages.log',
 
 # /media/images/
 def scan_img(img_path) -> str:
-    image = img_path[7:]  # omitting /media/ from image name
+    image = img_path
     logging.debug("Starting procedure on - " + image)
     index_of_dot = image[::-1].find('.') + 1
-    path_to_img = Path('media/images').resolve()  # finding full path to /media/images dir
+    path_to_img = Path('images/').resolve()  # finding full path to /media/images dir
+    image = image.split("/")[-1]
     txt_path = str(path_to_img) + '/textFiles/' + image[:-index_of_dot] + '.txt'
     file_exist = os.path.isfile(txt_path)
     if not file_exist:

@@ -1,0 +1,51 @@
+ 
+
+Load pretrainted network
+
+Early layers that Last layers that
+learned low level learned task
+
+features (edges, specific features
+blobs, colors)
+
+kL
+
+1 million images
+1000s classes
+
+Convolution Max pooling Features
+
+Replace final layers
+
+New layers to learn
+features specific to
+medical data set
+
+Mi
+
+Four classes learn faster
+
+Train network
+
+:
+
+ 
+
+Fully connected
+
+ 
+
+OOr @ ©OO —
+OO000
+
+ 
+
+ 
+
+ 
+
+Predict and assess
+network accuracy
+
+ 
+

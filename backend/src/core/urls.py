@@ -49,4 +49,4 @@ urlpatterns = [
     #     description="API for the BlogAPI",
     #     version="1.0.0"
     # ), name='openapi-schema'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

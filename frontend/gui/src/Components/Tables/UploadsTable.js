@@ -23,7 +23,7 @@ const UploadsTable = (props) => {
           return "Unknown Name";
         }
         let nameArray = text.split("/");
-        return nameArray[3];
+        return nameArray[2];
       },
     },
     {
@@ -32,7 +32,7 @@ const UploadsTable = (props) => {
       dataIndex: "image",
       key: "image",
       render: (text) => (
-        <Image width={220} height={120} src={`http://localhost:8000${text}`} />
+        <Image width={220} height={120} src={`http://gethatext.com/api${text}`} />
       ),
     },
 
@@ -58,6 +58,7 @@ const UploadsTable = (props) => {
         let newTime = dateAndTime[1].split(".")[0];
         return newDate + "-" + newTime;
       },
+      sorter: (a, b) => a.created_datetime - b.created_datetime,
     },
     {
       title: "Delete",
@@ -76,7 +77,7 @@ const UploadsTable = (props) => {
   useEffect(() => {
     const user = localStorage.getItem("username");
     axios
-      .get(`http://localhost:8000/upload/?user=${user}`)
+      .get(`/api/upload/?user=${user}`)
       .then((response) => {
         setUploads(response.data);
       })
@@ -98,7 +99,7 @@ const UploadsTable = (props) => {
     setConfirmLoading(true);
     let user = localStorage.getItem("email");
     axios
-      .delete(`http://localhost:8000/upload/delete/?pk=${pk}&user=${user}`)
+      .delete(`/api/upload/delete/?pk=${pk}&user=${user}`)
       .then((response) => {
         message.success(response.data.detail, 2.5);
         let filteredUploads = uploads.filter((upload) => upload.pk !== pk);

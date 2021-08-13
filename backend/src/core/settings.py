@@ -26,7 +26,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '54.239.6.10']
+ALLOWED_HOSTS = ['*', '127.0.0.1', 'localhost', '54.239.6.10']
 
 
 # Application definition
@@ -59,6 +59,7 @@ INSTALLED_APPS = [
 SITE_ID = 1
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -131,11 +132,11 @@ REST_FRAMEWORK = {
     ),
 }
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000"
+        "https://gethatext.com",
+    "http://localhost:3000",
+ "https://localhost:3000"
 ]
-
 AUTH_USER_MODEL = 'accounts.Account'
-
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
@@ -212,10 +213,9 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'images')
+STATIC_URL = '/images/'
 
 CORS_ORIGIN_ALLOW_ALL = True
 

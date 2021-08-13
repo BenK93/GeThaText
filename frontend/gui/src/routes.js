@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
@@ -10,24 +11,27 @@ import AboutView from "./Pages/About/AboutView";
 import UserInfoView from "./Pages/UserPanel/UserInfoView";
 
 const BaseRouter = (props) => (
-  <div>
-    <Route exact path="/" component={HomePage} />
-    <Route exact path="/upload/" component={UploadView} />
-    <Route exact path="/about/" component={AboutView} />
-    <Route
-      exact
-      path="/account-info/"
-      render={() =>
-        props.isAuthenticated | props.token ? (
-          <UserInfoView />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-    <Route exact path="/login/" component={LoginView} />
-    <Route exact path="/signup/" component={SignUpView} />
-  </div>
+	  <div>
+	    <Route exact path="/" component={HomePage} />
+	    <Route exact path="/upload/" component={UploadView} />
+	    <Route exact path="/about/" component={AboutView} />
+	    <Route
+	      exact
+	      path="/account-info/"
+	      render={() =>
+		              props.isAuthenticated | props.token ? (
+				                <UserInfoView />
+				              ) : (
+						                <Redirect to="/login" />
+						              )
+		            }
+	    />
+	    <Route exact path="/login/" component={LoginView} />
+	    <Route exact path="/signup/" component={SignUpView} />
+	  </div>
 );
 
 export default BaseRouter;
+
+
+

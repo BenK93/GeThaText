@@ -44,7 +44,7 @@ class LoginView extends React.Component {
     this.props.authStart();
     // true for Facebook false for Google
     axios
-      .get(`http://localhost:8000/account/user?user=${user}`)
+      .get(`/api/account/user?user=${user}`)
       .then((res) => {
         this.props.socialUserLogin(res.data, email);
       })

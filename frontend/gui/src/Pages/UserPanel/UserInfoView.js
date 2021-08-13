@@ -20,7 +20,7 @@ const UserInfoView = () => {
     const user = localStorage.getItem("username");
     if (user) {
       axios
-        .get(`http://localhost:8000/account/user?user=${user}`)
+        .get(`/api/account/user?user=${user}`)
         .then((response) => {
           setProfile(response.data.userInfo.personal);
         })
@@ -68,7 +68,7 @@ const UserInfoView = () => {
           <Input disabled addonBefore="Last Name:" value={profile.last_name} />
         )}
       </div>
-      <UploadsTable />
+	  <UploadsTable />
     </div>
   );
 };

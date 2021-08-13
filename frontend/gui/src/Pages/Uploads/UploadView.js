@@ -12,7 +12,7 @@ import {
   CopyOutlined,
   CheckCircleTwoTone,
 } from "@ant-design/icons";
-import BasicButton from "../../Components/Buttons/BasicButton";
+import BasicButton from "../../Components/Buttons/BasicButton.js";
 import { Upload, message, Typography, Button } from "antd";
 const { Paragraph } = Typography;
 
@@ -47,7 +47,7 @@ class UploadView extends React.PureComponent {
           }
           formData.set("image", this.imageData);
           axios
-            .post("http://127.0.0.1:8000/upload/", formData)
+            .post("/api/upload/", formData)
             .then((respond) => {
               const uploads = {
                 ...this.state.uploads,

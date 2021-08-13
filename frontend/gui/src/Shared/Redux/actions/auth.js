@@ -44,7 +44,7 @@ export const facebookRegistration = (response) => {
   return (dispatch) => {
     dispatch(authStart());
     axios
-      .post("http://127.0.0.1:8000/auth/convert-token", {
+      .post("/api/auth/convert-token/", {
         token: response.accessToken,
         grant_type: "convert_token",
         backend: "facebook",
@@ -77,7 +77,7 @@ export const googleRegistration = (response) => {
     dispatch(authStart());
     try {
       axios
-        .post("http://127.0.0.1:8000/auth/convert-token", {
+        .post("/api/auth/convert-token/", {
           token: response.accessToken,
           grant_type: "convert_token",
           backend: "google-oauth2",
@@ -113,7 +113,7 @@ export const authLogin = (email, password) => {
   return (dispatch) => {
     dispatch(authStart());
     axios
-      .post("http://127.0.0.1:8000/login/", {
+      .post("/api/login/", {
         username: email,
         password: password,
       })
@@ -141,7 +141,7 @@ export const authSignup = (username, email, password1, password2) => {
   return (dispatch) => {
     dispatch(authStart());
     axios
-      .post("http://127.0.0.1:8000/rest-auth/registration/", {
+      .post("/api/rest-auth/registration/", {
         username: username,
         email: email,
         password1: password1,
