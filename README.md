@@ -37,12 +37,14 @@
 
 
 ## Built With
-* [Next.js](https://nextjs.org/)
+### Front End
 * [React.js](https://reactjs.org/)
-* [Vue.js](https://vuejs.org/)
-* [Angular](https://angular.io/)
-* [Svelte](https://svelte.dev/)
-* [Laravel](https://laravel.com)
+* [Redux](https://redux.js.org/)
+* [Ant Design](https://ant.design/)
+### Back End
+* [DJnago](https://www.djangoproject.com/)
+* [Django-RestFrameWork](https://django-rest-framework.org/)
+* [SQLite](https://laravel.com)
 * [Bootstrap](https://getbootstrap.com)
 * [JQuery](https://jquery.com)
 
