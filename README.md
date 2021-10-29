@@ -87,16 +87,16 @@ Node.js
 ```
 
 ### Frontend Installation
-   1. ```sh cd frontend/gui ```
-   2. ```sh npm i ```
-   3. ```sh npm start (to run on localhost) ```
+   1. ``` cd frontend/gui ```
+   2. ``` npm i ```
+   3. ``` npm start (to run on localhost) ```
    
 ### Backend Installation
-   1. ```sh cd backend/src```
-   2. ```sh pipenv shell (creating virtual environment) ```
-   3. ```sh pipenv install -r requirements.txt ```
+   1. ``` cd backend/src```
+   2. ``` pipenv shell (creating virtual environment) ```
+   3. ``` pipenv install -r requirements.txt ```
    - if all dependencies downloaded succesfully run:
-   4. ```sh python manage.py runserver (to run on localhost ) ```
+   4. ``` python manage.py runserver (to run on localhost ) ```
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
