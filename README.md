@@ -37,14 +37,14 @@ And then can upload an image (must be under 2MB size) and get the text hidden in
 
 ## Example of Usage:
 * Home Page
-![Screen Shot 2021-10-28 at 18 19 20](https://user-images.githubusercontent.com/21170255/139415149-b2d44208-1782-48d9-990c-bea2ef4f20bd.png)
+<img width="900" alt="Screen Shot 2021-10-28 at 22 23 01" src="https://user-images.githubusercontent.com/21170255/139416090-f04dcfca-c286-45c0-95f3-cc24e404d6d9.png">
 
 After authenticating you can upload you image.
 - Image for example
 <img width="710" alt="Screen Shot 2021-10-28 at 22 24 47" src="https://user-images.githubusercontent.com/21170255/139415420-0c4ef9d6-544c-41fe-8aca-86e66f3b76fb.png">
 
 * Now, uploading it to the website (https://gethatext.com/upload/)
-<img width="1102" alt="Screen Shot 2021-10-28 at 22 26 24" src="https://user-images.githubusercontent.com/21170255/139415638-546ce3fb-c364-415a-a1b2-f91acecceec0.png">
+<img width="900" alt="Screen Shot 2021-10-28 at 22 26 24" src="https://user-images.githubusercontent.com/21170255/139415638-546ce3fb-c364-415a-a1b2-f91acecceec0.png">
 
 NOTE: after the upload is finished, you will be need to click on the green eye Icon <img src="frontend/gui/public/artificial-logo.ico" alt="Logo" width="10" height="10"/>
 ENJOY!
